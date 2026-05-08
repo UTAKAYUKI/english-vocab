@@ -711,8 +711,8 @@ function showWord() {
   updateCount();
   stopDots();
 
-  // Auto speak
-  setTimeout(() => speakWord(w), 300);
+  // Auto speak（読み上げ完了後にタイマー開始）
+  setTimeout(() => speakWordAndSchedule(w), 300);
 }
 
 function updateCount() {
@@ -787,6 +787,13 @@ async function speakWord(w) {
   isSpeaking = false;
 }
 
+async function speakWordAndSchedule(w) {
+  await speakWord(w);
+  if (autoPlay) {
+    startAutoTimer();
+  }
+}
+
 function speakCurrent() {
   speechSynthesis.cancel();
   isSpeaking = false;
@@ -809,17 +816,17 @@ function stopDots() {
 function nextWord() {
   speechSynthesis.cancel();
   isSpeaking = false;
+  clearAutoTimers();
   currentIndex = (currentIndex + 1) % filtered.length;
   showWord();
-  if (autoPlay) resetAutoTimer();
 }
 
 function prevWord() {
   speechSynthesis.cancel();
   isSpeaking = false;
+  clearAutoTimers();
   currentIndex = (currentIndex - 1 + filtered.length) % filtered.length;
   showWord();
-  if (autoPlay) resetAutoTimer();
 }
 
 function handleCardTap() {
@@ -856,7 +863,7 @@ function toggleAuto() {
     btn.textContent = '⏸ 停止';
     btn.classList.add('on');
     ring.style.display = 'block';
-    startAutoTimer();
+    if (!isSpeaking) startAutoTimer();
   } else {
     btn.textContent = '▶ 自動再生';
     btn.classList.remove('on');
