@@ -21,14 +21,13 @@
     --subtext: #94a3b8;
     --green: #22c55e;
     --red: #ef4444;
-    --yellow: #f59e0b;
   }
 
   body {
     background: var(--bg);
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    min-height: 100dvh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -40,46 +39,54 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
+    padding: 10px 16px;
     background: var(--card);
     border-bottom: 1px solid rgba(255,255,255,0.08);
     flex-shrink: 0;
   }
-  .header-title { font-size: 16px; font-weight: 700; color: var(--accent2); }
-  .header-count { font-size: 12px; color: var(--subtext); }
+  .header-title { font-size: 15px; font-weight: 700; color: var(--accent2); }
+  .header-count { font-size: 11px; color: var(--subtext); margin-top: 2px; }
   .header-btns { display: flex; gap: 8px; }
   .icon-btn {
-    width: 36px; height: 36px;
+    width: 34px; height: 34px;
     border: none; border-radius: 8px;
     background: rgba(255,255,255,0.08);
-    color: var(--text); font-size: 16px;
+    color: var(--text); font-size: 15px;
     cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s;
   }
   .icon-btn:active { background: rgba(255,255,255,0.18); }
 
   /* Category bar */
   .cat-bar {
-    display: flex; gap: 8px; padding: 10px 16px;
+    display: flex; gap: 6px; padding: 8px 16px;
     overflow-x: auto; flex-shrink: 0;
     scrollbar-width: none;
   }
   .cat-bar::-webkit-scrollbar { display: none; }
   .cat-btn {
-    padding: 5px 14px; border-radius: 20px; border: none;
+    padding: 4px 12px; border-radius: 20px; border: none;
     background: rgba(255,255,255,0.08); color: var(--subtext);
     font-size: 12px; font-weight: 600; cursor: pointer;
-    white-space: nowrap; transition: all 0.2s;
+    white-space: nowrap;
   }
   .cat-btn.active { background: var(--accent); color: #fff; }
 
-  /* Main card area */
+  /* Progress */
+  .progress-bar {
+    height: 2px; background: rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+  .progress-fill {
+    height: 100%; background: var(--accent);
+    transition: width 0.3s;
+  }
+
+  /* Card area */
   .card-area {
     flex: 1;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 16px;
-    position: relative;
+    padding: 12px 16px;
     overflow: hidden;
   }
 
@@ -87,131 +94,150 @@
     width: 100%; max-width: 420px;
     background: var(--card);
     border-radius: 24px;
-    padding: 40px 32px;
+    padding: 36px 28px;
     text-align: center;
     border: 1px solid rgba(255,255,255,0.08);
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    position: relative;
     cursor: pointer;
-    transition: transform 0.15s;
-    min-height: 260px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+    transition: transform 0.12s;
   }
   .card:active { transform: scale(0.98); }
 
   .word-category {
-    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
     color: var(--accent2); text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
-
   .word-en {
-    font-size: clamp(36px, 10vw, 56px);
+    font-size: clamp(34px, 9vw, 52px);
     font-weight: 800; letter-spacing: -1px;
     color: var(--text); line-height: 1.1;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
-
   .word-phonetic {
-    font-size: 16px; color: var(--subtext);
-    margin-bottom: 16px; min-height: 22px;
+    font-size: 15px; color: var(--subtext);
+    margin-bottom: 14px; min-height: 20px;
   }
-
   .divider {
-    width: 48px; height: 2px;
+    width: 40px; height: 2px;
     background: var(--accent); border-radius: 2px;
-    margin: 0 auto 16px;
+    margin: 0 auto 14px;
   }
-
   .word-jp {
-    font-size: clamp(18px, 5vw, 24px);
-    color: var(--subtext); font-weight: 600;
-    line-height: 1.4;
+    font-size: clamp(17px, 4.5vw, 22px);
+    color: var(--subtext); font-weight: 600; line-height: 1.4;
   }
-
   .word-example {
-    font-size: 13px; color: #475569;
-    margin-top: 14px; line-height: 1.6;
-    display: none;
+    font-size: 12px; color: #475569;
+    margin-top: 12px; line-height: 1.6; display: none;
   }
   .card.show-example .word-example { display: block; }
 
-  /* Speaking indicator */
+  /* Speaking dots */
   .speaking-dots {
-    display: flex; gap: 5px; margin-top: 16px;
-    justify-content: center; min-height: 20px;
+    display: flex; gap: 5px; margin-top: 14px;
+    justify-content: center; min-height: 18px;
   }
   .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent);
-    animation: none; opacity: 0.2;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); opacity: 0.2;
   }
-  .dot.active { opacity: 1; animation: pulse 0.6s ease-in-out infinite; }
+  .dot.active { opacity: 1; animation: pulse 0.5s ease-in-out infinite; }
   @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.5); }
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.6); }
   }
 
-  /* Swipe hint */
-  .swipe-hint {
-    font-size: 12px; color: #334155;
-    margin-top: 16px; text-align: center;
-  }
+  .swipe-hint { font-size: 11px; color: #334155; margin-top: 10px; }
 
-  /* Bottom controls */
+  /* Controls */
   .controls {
-    padding: 12px 16px 20px;
+    padding: 10px 14px 16px;
     background: var(--card);
     border-top: 1px solid rgba(255,255,255,0.08);
     flex-shrink: 0;
   }
 
-  .btn-row {
-    display: flex; gap: 10px; margin-bottom: 10px;
+  /* Mode selector */
+  .mode-row {
+    display: flex; gap: 8px; margin-bottom: 10px;
+  }
+  .mode-btn {
+    flex: 1; padding: 9px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    color: var(--subtext);
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mode-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
   }
 
-  .btn {
-    flex: 1; padding: 12px;
-    border: none; border-radius: 14px;
-    font-size: 14px; font-weight: 700;
-    cursor: pointer; transition: all 0.15s;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
+  /* Main controls row */
+  .main-row {
+    display: flex; gap: 8px; margin-bottom: 8px; align-items: center;
   }
-  .btn:active { transform: scale(0.96); }
-  .btn-prev { background: rgba(255,255,255,0.08); color: var(--text); }
-  .btn-speak { background: var(--accent); color: #fff; flex: 1.5; }
-  .btn-next { background: rgba(255,255,255,0.08); color: var(--text); }
+  .btn-nav {
+    width: 52px; height: 52px;
+    border: none; border-radius: 14px;
+    background: rgba(255,255,255,0.08); color: var(--text);
+    font-size: 18px; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .btn-nav:active { background: rgba(255,255,255,0.16); }
+
+  .btn-play {
+    flex: 1; height: 52px;
+    border: none; border-radius: 16px;
+    background: var(--accent); color: #fff;
+    font-size: 17px; font-weight: 800; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.15s;
+  }
+  .btn-play:active { transform: scale(0.97); }
+  .btn-play.playing { background: #4338ca; }
+
+  /* Sub row */
+  .sub-row {
+    display: flex; gap: 8px;
+  }
+  .btn-sub {
+    flex: 1; padding: 10px;
+    border: none; border-radius: 12px;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .btn-sub:active { transform: scale(0.96); }
   .btn-sticker { background: rgba(239,68,68,0.15); color: var(--red); }
   .btn-ok { background: rgba(34,197,94,0.15); color: var(--green); }
 
-  .auto-row {
-    display: flex; align-items: center; gap: 10px;
+  /* Interval row (continuous mode only) */
+  .interval-row {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 8px; display: none;
   }
-  .auto-toggle {
-    flex: 1; padding: 10px;
-    border: none; border-radius: 12px;
-    background: rgba(255,255,255,0.06); color: var(--subtext);
-    font-size: 13px; font-weight: 700; cursor: pointer;
-    transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .auto-toggle.on { background: rgba(99,102,241,0.2); color: var(--accent2); }
-
-  .speed-label { font-size: 12px; color: var(--subtext); white-space: nowrap; }
-  .speed-select {
+  .interval-row.show { display: flex; }
+  .interval-label { font-size: 12px; color: var(--subtext); }
+  .interval-select {
     background: rgba(255,255,255,0.06); color: var(--text);
     border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
-    padding: 8px 10px; font-size: 13px; cursor: pointer;
+    padding: 7px 10px; font-size: 13px; cursor: pointer; flex: 1;
   }
-
-  /* Progress bar */
-  .progress-bar {
+  /* Countdown bar */
+  .countdown-bar {
     height: 3px; background: rgba(255,255,255,0.06);
-    border-radius: 3px; margin-bottom: 10px; overflow: hidden;
+    border-radius: 3px; margin-top: 8px; overflow: hidden; display: none;
   }
-  .progress-fill {
+  .countdown-bar.show { display: block; }
+  .countdown-fill {
     height: 100%; background: var(--accent);
-    border-radius: 3px; transition: width 0.3s;
+    border-radius: 3px; width: 100%;
+    transition: width 1s linear;
   }
 
   /* Modals */
@@ -225,99 +251,64 @@
   .modal {
     width: 100%; max-width: 480px;
     background: var(--card); border-radius: 24px 24px 0 0;
-    padding: 24px 20px 36px;
+    padding: 20px 18px 32px;
     transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
     max-height: 85dvh; overflow-y: auto;
   }
   .modal-overlay.open .modal { transform: translateY(0); }
   .modal-handle {
-    width: 40px; height: 4px; background: rgba(255,255,255,0.2);
-    border-radius: 2px; margin: 0 auto 20px;
+    width: 36px; height: 4px; background: rgba(255,255,255,0.2);
+    border-radius: 2px; margin: 0 auto 16px;
   }
-  .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
-
-  .form-group { margin-bottom: 16px; }
-  .form-label { font-size: 12px; color: var(--subtext); font-weight: 600; margin-bottom: 6px; display: block; }
-  .form-input {
-    width: 100%; padding: 12px 14px;
+  .modal-title { font-size: 17px; font-weight: 800; margin-bottom: 16px; }
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 11px; color: var(--subtext); font-weight: 600; margin-bottom: 5px; display: block; }
+  .form-input, .form-select {
+    width: 100%; padding: 11px 13px;
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px; color: var(--text); font-size: 16px;
+    border-radius: 11px; color: var(--text); font-size: 15px;
   }
   .form-input:focus { outline: none; border-color: var(--accent); }
-  .form-select {
-    width: 100%; padding: 12px 14px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px; color: var(--text); font-size: 15px;
-  }
-
   .btn-submit {
-    width: 100%; padding: 14px;
+    width: 100%; padding: 13px;
     background: var(--accent); color: #fff;
-    border: none; border-radius: 14px;
-    font-size: 16px; font-weight: 700; cursor: pointer;
-    margin-top: 8px;
+    border: none; border-radius: 13px;
+    font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 6px;
   }
-  .btn-cancel {
-    width: 100%; padding: 12px;
+  .btn-cancel-modal {
+    width: 100%; padding: 11px;
     background: rgba(255,255,255,0.06); color: var(--subtext);
-    border: none; border-radius: 14px;
-    font-size: 15px; font-weight: 600; cursor: pointer;
-    margin-top: 8px;
+    border: none; border-radius: 13px;
+    font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px;
   }
-
-  /* Stats modal */
-  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-  .stat-card {
-    background: rgba(255,255,255,0.05);
-    border-radius: 14px; padding: 16px; text-align: center;
-  }
-  .stat-num { font-size: 28px; font-weight: 800; color: var(--accent2); }
-  .stat-label { font-size: 12px; color: var(--subtext); margin-top: 4px; }
-
-  .sticker-list { display: flex; flex-direction: column; gap: 8px; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .stat-card { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 14px; text-align: center; }
+  .stat-num { font-size: 26px; font-weight: 800; color: var(--accent2); }
+  .stat-label { font-size: 11px; color: var(--subtext); margin-top: 3px; }
   .sticker-item {
     display: flex; align-items: center; justify-content: space-between;
-    background: rgba(239,68,68,0.08);
-    border-radius: 12px; padding: 12px 14px;
+    background: rgba(239,68,68,0.08); border-radius: 11px; padding: 10px 12px; margin-bottom: 6px;
   }
-  .sticker-word { font-weight: 700; }
-  .sticker-jp { font-size: 13px; color: var(--subtext); }
-  .btn-remove {
-    background: none; border: none; color: var(--red);
-    font-size: 18px; cursor: pointer; padding: 4px;
-  }
+  .sticker-word { font-weight: 700; font-size: 14px; }
+  .sticker-jp { font-size: 12px; color: var(--subtext); }
+  .btn-remove { background: none; border: none; color: var(--red); font-size: 16px; cursor: pointer; }
 
   /* Toast */
   .toast {
-    position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px);
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-80px);
     background: var(--accent); color: #fff;
-    padding: 10px 20px; border-radius: 20px;
-    font-size: 14px; font-weight: 600;
-    transition: transform 0.3s; z-index: 200;
+    padding: 9px 18px; border-radius: 20px;
+    font-size: 13px; font-weight: 600;
+    transition: transform 0.3s; z-index: 200; white-space: nowrap;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
-  /* Fade animation */
-  .card-fade { animation: fadeIn 0.35s ease; }
+  .card-fade { animation: fadeIn 0.3s ease; }
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  /* Auto progress ring */
-  .auto-ring {
-    width: 36px; height: 36px; flex-shrink: 0;
-  }
-  .auto-ring circle {
-    fill: none; stroke-width: 3;
-    transform-origin: 50% 50%;
-    transform: rotate(-90deg);
-    transition: stroke-dashoffset 1s linear;
-  }
-  .ring-bg { stroke: rgba(255,255,255,0.1); }
-  .ring-fill { stroke: var(--accent); }
 </style>
 </head>
 <body>
@@ -326,11 +317,11 @@
 <div class="header">
   <div>
     <div class="header-title">📖 英単語帳</div>
-    <div class="header-count" id="countLabel">読み込み中...</div>
+    <div class="header-count" id="countLabel">---</div>
   </div>
   <div class="header-btns">
-    <button class="icon-btn" onclick="openStats()" title="統計">📊</button>
-    <button class="icon-btn" onclick="openAddWord()" title="単語追加">＋</button>
+    <button class="icon-btn" onclick="openStats()">📊</button>
+    <button class="icon-btn" onclick="openAddWord()">＋</button>
   </div>
 </div>
 
@@ -338,9 +329,7 @@
 <div class="cat-bar" id="catBar"></div>
 
 <!-- Progress bar -->
-<div style="padding: 0 16px;">
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
 <!-- Card area -->
 <div class="card-area" id="cardArea">
@@ -357,26 +346,38 @@
       <div class="dot" id="d3"></div>
     </div>
   </div>
-  <div class="swipe-hint">← スワイプまたはタップで次へ →</div>
+  <div class="swipe-hint">← スワイプで前後へ移動 →</div>
 </div>
 
 <!-- Controls -->
 <div class="controls">
-  <div class="btn-row">
-    <button class="btn btn-sticker" onclick="toggleSticker()">🔴 苦手</button>
-    <button class="btn btn-prev" onclick="prevWord()">◀ 前へ</button>
-    <button class="btn btn-speak" onclick="speakCurrent()">🔊 読む</button>
-    <button class="btn btn-next" onclick="nextWord()">次へ ▶</button>
-    <button class="btn btn-ok" onclick="markOk()">✅ OK</button>
+
+  <!-- Mode selector -->
+  <div class="mode-row">
+    <button class="mode-btn active" id="modeSingle" onclick="setMode('single')">🔂 1語再生</button>
+    <button class="mode-btn" id="modeContinuous" onclick="setMode('continuous')">▶▶ 連続再生</button>
   </div>
-  <div class="auto-row">
-    <button class="auto-toggle" id="autoBtn" onclick="toggleAuto()">▶ 自動再生</button>
-    <svg class="auto-ring" id="autoRing" viewBox="0 0 36 36" style="display:none;">
-      <circle class="ring-bg" cx="18" cy="18" r="15.9"/>
-      <circle class="ring-fill" id="ringFill" cx="18" cy="18" r="15.9" stroke-dasharray="100" stroke-dashoffset="100"/>
-    </svg>
-    <span class="speed-label">次まで</span>
-    <select class="speed-select" id="speedSelect" onchange="updateSpeed()">
+
+  <!-- Nav + Play/Stop -->
+  <div class="main-row">
+    <button class="btn-nav" onclick="prevWord()">◀</button>
+    <button class="btn-play" id="playBtn" onclick="handlePlayStop()">
+      <span id="playIcon">▶</span>
+      <span id="playLabel">再生</span>
+    </button>
+    <button class="btn-nav" onclick="nextWord()">▶</button>
+  </div>
+
+  <!-- Sticker / OK -->
+  <div class="sub-row">
+    <button class="btn-sub btn-sticker" onclick="toggleSticker()">🔴 苦手</button>
+    <button class="btn-sub btn-ok" onclick="markOk()">✅ 覚えた</button>
+  </div>
+
+  <!-- Interval (continuous mode) -->
+  <div class="interval-row" id="intervalRow">
+    <span class="interval-label">次まで</span>
+    <select class="interval-select" id="intervalSelect" onchange="updateInterval()">
       <option value="3">3秒</option>
       <option value="5" selected>5秒</option>
       <option value="8">8秒</option>
@@ -386,6 +387,12 @@
       <option value="30">30秒</option>
     </select>
   </div>
+
+  <!-- Countdown bar -->
+  <div class="countdown-bar" id="countdownBar">
+    <div class="countdown-fill" id="countdownFill"></div>
+  </div>
+
 </div>
 
 <!-- Add Word Modal -->
@@ -422,7 +429,7 @@
       </select>
     </div>
     <button class="btn-submit" onclick="addWord()">追加する</button>
-    <button class="btn-cancel" onclick="closeModal('addModal')">キャンセル</button>
+    <button class="btn-cancel-modal" onclick="closeModal('addModal')">キャンセル</button>
   </div>
 </div>
 
@@ -437,19 +444,17 @@
       <div class="stat-card"><div class="stat-num" id="statSticker">0</div><div class="stat-label">苦手 🔴</div></div>
       <div class="stat-card"><div class="stat-num" id="statCustom">0</div><div class="stat-label">自分で追加</div></div>
     </div>
-    <div class="modal-title" style="font-size:15px; margin-bottom:12px;">🔴 苦手単語リスト</div>
-    <div class="sticker-list" id="stickerList"><div style="color:var(--subtext);font-size:14px;">まだ苦手単語はありません</div></div>
-    <button class="btn-cancel" onclick="closeModal('statsModal')" style="margin-top:20px;">閉じる</button>
+    <div style="font-size:14px;font-weight:800;margin-bottom:10px;">🔴 苦手単語リスト</div>
+    <div id="stickerList"></div>
+    <button class="btn-cancel-modal" onclick="closeModal('statsModal')" style="margin-top:16px;">閉じる</button>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
 // ===================== WORD DATA =====================
 const BUILTIN_WORDS = [
-  // 基本動詞
   {en:"accomplish",jp:"達成する、成し遂げる",ph:"/əˈkɑːmplɪʃ/",cat:"基本動詞",ex:"She accomplished her goal."},
   {en:"achieve",jp:"達成する、獲得する",ph:"/əˈtʃiːv/",cat:"基本動詞",ex:"He achieved great success."},
   {en:"acquire",jp:"習得する、取得する",ph:"/əˈkwaɪər/",cat:"基本動詞",ex:"She acquired new skills."},
@@ -492,8 +497,6 @@ const BUILTIN_WORDS = [
   {en:"resolve",jp:"解決する、決意する",ph:"/rɪˈzɒlv/",cat:"基本動詞",ex:"Resolve the conflict."},
   {en:"suggest",jp:"提案する、示唆する",ph:"/səˈdʒest/",cat:"基本動詞",ex:"I suggest a new approach."},
   {en:"support",jp:"支援する、支持する",ph:"/səˈpɔːrt/",cat:"基本動詞",ex:"Support your team."},
-
-  // 形容詞
   {en:"accurate",jp:"正確な",ph:"/ˈækjərət/",cat:"形容詞",ex:"Give an accurate report."},
   {en:"adequate",jp:"十分な、適切な",ph:"/ˈædɪkwət/",cat:"形容詞",ex:"The budget is adequate."},
   {en:"ambitious",jp:"野心的な",ph:"/æmˈbɪʃəs/",cat:"形容詞",ex:"She is an ambitious leader."},
@@ -519,8 +522,6 @@ const BUILTIN_WORDS = [
   {en:"suitable",jp:"適した、ふさわしい",ph:"/ˈsuːtəbl/",cat:"形容詞",ex:"Choose a suitable time."},
   {en:"thorough",jp:"徹底的な",ph:"/ˈθʌrə/",cat:"形容詞",ex:"A thorough review."},
   {en:"urgent",jp:"緊急の",ph:"/ˈɜːrdʒənt/",cat:"形容詞",ex:"This is urgent matter."},
-
-  // 名詞
   {en:"achievement",jp:"達成、業績",ph:"/əˈtʃiːvmənt/",cat:"名詞",ex:"A great achievement."},
   {en:"agreement",jp:"合意、契約",ph:"/əˈɡriːmənt/",cat:"名詞",ex:"Sign the agreement."},
   {en:"approach",jp:"アプローチ、方法",ph:"/əˈprəʊtʃ/",cat:"名詞",ex:"Try a new approach."},
@@ -552,8 +553,6 @@ const BUILTIN_WORDS = [
   {en:"schedule",jp:"スケジュール、予定",ph:"/ˈʃedjuːl/",cat:"名詞",ex:"Check your schedule."},
   {en:"solution",jp:"解決策",ph:"/səˈluːʃn/",cat:"名詞",ex:"Find a solution."},
   {en:"strategy",jp:"戦略",ph:"/ˈstrætɪdʒi/",cat:"名詞",ex:"Plan a strategy."},
-
-  // TOEIC
   {en:"agenda",jp:"議題、予定表",ph:"/əˈdʒendə/",cat:"TOEIC",ex:"Check the agenda."},
   {en:"authorize",jp:"権限を与える、許可する",ph:"/ˈɔːθəraɪz/",cat:"TOEIC",ex:"Authorize the payment."},
   {en:"budget",jp:"予算",ph:"/ˈbʌdʒɪt/",cat:"TOEIC",ex:"Stay within budget."},
@@ -584,8 +583,6 @@ const BUILTIN_WORDS = [
   {en:"supplier",jp:"供給業者、仕入先",ph:"/səˈplaɪər/",cat:"TOEIC",ex:"Contact the supplier."},
   {en:"survey",jp:"調査、アンケート",ph:"/ˈsɜːrveɪ/",cat:"TOEIC",ex:"Conduct a survey."},
   {en:"transaction",jp:"取引、処理",ph:"/trænˈzækʃn/",cat:"TOEIC",ex:"Record each transaction."},
-
-  // 日常会話
   {en:"apologize",jp:"謝る",ph:"/əˈpɒlədʒaɪz/",cat:"日常会話",ex:"I apologize for that."},
   {en:"appreciate",jp:"感謝する、理解する",ph:"/əˈpriːʃieɪt/",cat:"日常会話",ex:"I appreciate your help."},
   {en:"celebrate",jp:"祝う",ph:"/ˈselɪbreɪt/",cat:"日常会話",ex:"Let's celebrate!"},
@@ -608,22 +605,17 @@ const BUILTIN_WORDS = [
   {en:"wonderful",jp:"素晴らしい",ph:"/ˈwʌndərfl/",cat:"日常会話",ex:"What a wonderful day!"},
 ];
 
-// ===================== APP STATE =====================
-let words = [];
-let filtered = [];
-let currentIndex = 0;
-let currentCat = "すべて";
-let autoPlay = false;
-let autoInterval = null;
-let autoSeconds = 5;
-let isSpeaking = false;
-let speakVersion = 0;
-let okWords = new Set();
-let stickerWords = new Set();
-let customWords = [];
-let autoCountdown = null;
-let ringCircumference = 100;
+// ===================== STATE =====================
+let words = [], filtered = [], currentIndex = 0, currentCat = "すべて";
+let playMode = 'single';   // 'single' or 'continuous'
+let isPlaying = false;
+let speakVer = 0;          // キャンセル管理用バージョン番号
+let countdownTimer = null;
+let countdownSec = 0;
+let intervalSec = 5;
+let okWords = new Set(), stickerWords = new Set(), customWords = [];
 
+// ===================== STORAGE =====================
 function loadStorage() {
   try {
     okWords = new Set(JSON.parse(localStorage.getItem('okWords') || '[]'));
@@ -631,24 +623,35 @@ function loadStorage() {
     customWords = JSON.parse(localStorage.getItem('customWords') || '[]');
   } catch(e) {}
 }
-
 function saveStorage() {
   localStorage.setItem('okWords', JSON.stringify([...okWords]));
   localStorage.setItem('stickerWords', JSON.stringify([...stickerWords]));
   localStorage.setItem('customWords', JSON.stringify(customWords));
 }
 
-function buildWords() {
-  words = [...BUILTIN_WORDS, ...customWords];
+// ===================== WORDS =====================
+function buildWords() { words = [...BUILTIN_WORDS, ...customWords]; }
+function shuffle(arr) {
+  for (let i = arr.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
 }
-
+function applyFilter() {
+  if (currentCat === "すべて") filtered = [...words];
+  else if (currentCat === "苦手のみ") filtered = words.filter(w => stickerWords.has(w.en));
+  else filtered = words.filter(w => w.cat === currentCat);
+  if (!filtered.length && currentCat === "苦手のみ") {
+    filtered = [{en:"苦手単語なし", jp:"苦手マークした単語がここに表示されます", ph:"", cat:"", ex:""}];
+  }
+  shuffle(filtered);
+}
 function getCategories() {
-  const cats = ["すべて", "苦手のみ"];
+  const cats = ["すべて","苦手のみ"];
   const seen = new Set();
   words.forEach(w => { if (!seen.has(w.cat)) { seen.add(w.cat); cats.push(w.cat); } });
   return cats;
 }
-
 function renderCatBar() {
   const bar = document.getElementById('catBar');
   bar.innerHTML = '';
@@ -656,187 +659,211 @@ function renderCatBar() {
     const btn = document.createElement('button');
     btn.className = 'cat-btn' + (cat === currentCat ? ' active' : '');
     btn.textContent = cat;
-    btn.onclick = () => selectCat(cat);
+    btn.onclick = () => { currentCat = cat; currentIndex = 0; applyFilter(); renderCatBar(); stopAll(); showWord(); };
     bar.appendChild(btn);
   });
 }
 
-function selectCat(cat) {
-  currentCat = cat;
-  renderCatBar();
-  applyFilter();
-  currentIndex = 0;
-  showWord();
-}
-
-function applyFilter() {
-  if (currentCat === "すべて") {
-    filtered = [...words];
-  } else if (currentCat === "苦手のみ") {
-    filtered = words.filter(w => stickerWords.has(w.en));
-  } else {
-    filtered = words.filter(w => w.cat === currentCat);
-  }
-  if (filtered.length === 0 && currentCat === "苦手のみ") {
-    filtered = [{en:"苦手単語なし", jp:"苦手マークした単語がここに表示されます", ph:"", cat:"", ex:""}];
-  }
-  shuffle(filtered);
-}
-
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-}
-
+// ===================== DISPLAY =====================
 function showWord() {
-  if (filtered.length === 0) return;
+  if (!filtered.length) return;
   const w = filtered[currentIndex];
   const card = document.getElementById('mainCard');
   card.className = 'card card-fade';
-  setTimeout(() => card.classList.remove('card-fade'), 400);
-
+  setTimeout(() => card.classList.remove('card-fade'), 350);
+  card.classList.remove('show-example');
   document.getElementById('wordEn').textContent = w.en;
+  document.getElementById('wordEn').style.color = stickerWords.has(w.en) ? 'var(--red)' : 'var(--text)';
   document.getElementById('wordPhonetic').textContent = w.ph || '';
   document.getElementById('wordJp').textContent = w.jp;
   document.getElementById('wordCategory').textContent = w.cat || '';
   document.getElementById('wordExample').textContent = w.ex ? '📝 ' + w.ex : '';
-  card.classList.remove('show-example');
-
-  // Sticker indicator
-  const enEl = document.getElementById('wordEn');
-  enEl.style.color = stickerWords.has(w.en) ? 'var(--red)' : 'var(--text)';
-
   updateProgress();
   updateCount();
   stopDots();
-
-  // Auto speak（読み上げ完了後にタイマー開始）
-  const ver = ++speakVersion;
-  setTimeout(() => speakWordAndSchedule(w, ver), 300);
 }
-
 function updateCount() {
-  const total = filtered.length;
-  const cur = total > 0 ? currentIndex + 1 : 0;
-  document.getElementById('countLabel').textContent = `${cur} / ${total}語`;
+  document.getElementById('countLabel').textContent =
+    `${filtered.length ? currentIndex+1 : 0} / ${filtered.length}語`;
 }
-
 function updateProgress() {
-  const pct = filtered.length > 0 ? ((currentIndex + 1) / filtered.length) * 100 : 0;
+  const pct = filtered.length ? ((currentIndex+1)/filtered.length)*100 : 0;
   document.getElementById('progressFill').style.width = pct + '%';
 }
 
-// ===================== TTS =====================
-let voices = [];
-let femaleEnVoice = null;
-let femaleJaVoice = null;
-
+// ===================== VOICES =====================
+let voices = [], enVoice = null, jaVoice = null;
 function loadVoices() {
   voices = speechSynthesis.getVoices();
-  // Find female English voice
-  const enPriority = ["Samantha","Karen","Moira","Tessa","Allison","Ava","Susan","Victoria","Fiona"];
-  for (const name of enPriority) {
-    const v = voices.find(v => v.name.includes(name));
-    if (v) { femaleEnVoice = v; break; }
+  const enPrio = ["Samantha","Karen","Moira","Tessa","Allison","Ava","Susan","Victoria","Fiona"];
+  for (const n of enPrio) {
+    const v = voices.find(v => v.name.includes(n));
+    if (v) { enVoice = v; break; }
   }
-  if (!femaleEnVoice) {
-    femaleEnVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
-      || voices.find(v => v.lang === 'en-US')
-      || voices.find(v => v.lang.startsWith('en'));
-  }
-  // Find Japanese voice
-  femaleJaVoice = voices.find(v => v.lang === 'ja-JP' && (v.name.includes('Kyoko') || v.name.includes('O-Ren')))
-    || voices.find(v => v.lang === 'ja-JP')
-    || voices.find(v => v.lang.startsWith('ja'));
+  if (!enVoice) enVoice = voices.find(v => v.lang==='en-US') || voices.find(v => v.lang.startsWith('en'));
+  jaVoice = voices.find(v => v.lang==='ja-JP' && (v.name.includes('Kyoko')||v.name.includes('O-Ren')))
+    || voices.find(v => v.lang==='ja-JP') || voices.find(v => v.lang.startsWith('ja'));
 }
-
 if (typeof speechSynthesis !== 'undefined') {
   speechSynthesis.onvoiceschanged = loadVoices;
   loadVoices();
 }
 
-function speak(text, voice, rate, onEnd) {
-  return new Promise(resolve => {
-    const u = new SpeechSynthesisUtterance(text);
-    if (voice) u.voice = voice;
-    u.rate = rate || 0.9;
-    u.pitch = 1.1;
-    u.onend = () => { if (onEnd) onEnd(); resolve(); };
-    u.onerror = () => resolve();
-    speechSynthesis.speak(u);
+// ===================== TTS (コールバックチェーン方式) =====================
+// async/awaitを使わず、onendコールバックでチェーンする
+// → iOS Safariの互換性問題を回避
+
+function speakOne(text, voice, rate, ver, callback) {
+  if (speakVer !== ver) return; // キャンセル済み
+  const u = new SpeechSynthesisUtterance(text);
+  if (voice) u.voice = voice;
+  u.rate = rate || 0.9;
+  u.pitch = 1.05;
+  u.onend = () => { if (speakVer === ver) callback(); };
+  u.onerror = () => { if (speakVer === ver) callback(); };
+  speechSynthesis.speak(u);
+}
+
+function waitThen(ms, ver, callback) {
+  setTimeout(() => { if (speakVer === ver) callback(); }, ms);
+}
+
+function startSpeakChain(w) {
+  const ver = ++speakVer;
+  speechSynthesis.cancel();
+
+  // ステップ1: 英語1回目
+  activateDot(1);
+  speakOne(w.en, enVoice, 0.85, ver, () => {
+    // 2秒待つ → 英語2回目
+    waitThen(2000, ver, () => {
+      activateDot(2);
+      speakOne(w.en, enVoice, 0.85, ver, () => {
+        // 2秒待つ → 英語3回目
+        waitThen(2000, ver, () => {
+          activateDot(3);
+          speakOne(w.en, enVoice, 0.85, ver, () => {
+            stopDots();
+            // 0.5秒待つ → 日本語
+            waitThen(500, ver, () => {
+              if (jaVoice) {
+                speakOne(w.jp, jaVoice, 0.9, ver, () => {
+                  // 日本語読み上げ完了 → ここからタイマー開始
+                  onSpeakComplete(ver);
+                });
+              } else {
+                onSpeakComplete(ver);
+              }
+            });
+          });
+        });
+      });
+    });
   });
 }
 
-async function speakWord(w, ver) {
-  if (!w || !w.en || w.en === '苦手単語なし') return;
-  speechSynthesis.cancel();
-  isSpeaking = true;
-  activateDot(1);
-  await speak(w.en, femaleEnVoice, 0.85);
-  if (speakVersion !== ver) { stopDots(); return; }
-  await delay(2000);
-  if (speakVersion !== ver) { stopDots(); return; }
-  activateDot(2);
-  await speak(w.en, femaleEnVoice, 0.85);
-  if (speakVersion !== ver) { stopDots(); return; }
-  await delay(2000);
-  if (speakVersion !== ver) { stopDots(); return; }
-  activateDot(3);
-  await speak(w.en, femaleEnVoice, 0.85);
-  if (speakVersion !== ver) { stopDots(); return; }
-  stopDots();
-  await delay(500);
-  if (speakVersion !== ver) return;
-  if (femaleJaVoice) {
-    await speak(w.jp, femaleJaVoice, 0.9);
-  }
-  if (speakVersion !== ver) return;
-  isSpeaking = false;
-}
-
-async function speakWordAndSchedule(w, ver) {
-  await speakWord(w, ver);
-  if (autoPlay && speakVersion === ver) {
-    startAutoTimer();
+// 読み上げ完了後の処理
+function onSpeakComplete(ver) {
+  if (speakVer !== ver) return;
+  if (!isPlaying) return;
+  if (playMode === 'single') {
+    // 1語再生モード: 停止
+    setPlayState(false);
+  } else {
+    // 連続再生モード: カウントダウン開始
+    startCountdown(ver);
   }
 }
 
-function speakCurrent() {
-  const ver = ++speakVersion;
-  speechSynthesis.cancel();
-  isSpeaking = false;
-  stopDots();
+// ===================== COUNTDOWN =====================
+function startCountdown(ver) {
+  if (speakVer !== ver) return;
+  const total = intervalSec;
+  countdownSec = total;
+  showCountdownBar(true);
+  setCountdownFill(1.0);
+
+  countdownTimer = setInterval(() => {
+    if (speakVer !== ver) { clearCountdown(); return; }
+    countdownSec--;
+    setCountdownFill(countdownSec / total);
+    if (countdownSec <= 0) {
+      clearCountdown();
+      if (speakVer === ver && isPlaying) goNext();
+    }
+  }, 1000);
+}
+
+function clearCountdown() {
+  if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+  showCountdownBar(false);
+  setCountdownFill(1.0);
+}
+
+function setCountdownFill(ratio) {
+  document.getElementById('countdownFill').style.width = (ratio * 100) + '%';
+}
+function showCountdownBar(show) {
+  document.getElementById('countdownBar').classList.toggle('show', show);
+}
+
+// ===================== PLAY / STOP =====================
+function handlePlayStop() {
+  if (isPlaying) {
+    stopAll();
+  } else {
+    startPlay();
+  }
+}
+
+function startPlay() {
+  setPlayState(true);
   const w = filtered[currentIndex];
-  if (w) speakWord(w, ver);
+  if (w && w.en !== '苦手単語なし') startSpeakChain(w);
 }
 
-function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-function activateDot(n) {
+function stopAll() {
+  speakVer++;
+  speechSynthesis.cancel();
+  clearCountdown();
+  setPlayState(false);
   stopDots();
-  document.getElementById('d'+n).classList.add('active');
 }
-function stopDots() {
-  ['d1','d2','d3'].forEach(id => document.getElementById(id).classList.remove('active'));
+
+function setPlayState(playing) {
+  isPlaying = playing;
+  const btn = document.getElementById('playBtn');
+  const icon = document.getElementById('playIcon');
+  const label = document.getElementById('playLabel');
+  if (playing) {
+    btn.classList.add('playing');
+    icon.textContent = '⏸';
+    label.textContent = '停止';
+  } else {
+    btn.classList.remove('playing');
+    icon.textContent = '▶';
+    label.textContent = '再生';
+  }
 }
 
 // ===================== NAVIGATION =====================
+function goNext() {
+  currentIndex = (currentIndex + 1) % filtered.length;
+  showWord();
+  if (isPlaying) {
+    const w = filtered[currentIndex];
+    if (w && w.en !== '苦手単語なし') startSpeakChain(w);
+  }
+}
+
 function nextWord() {
-  speakVersion++;
-  speechSynthesis.cancel();
-  isSpeaking = false;
-  clearAutoTimers();
+  stopAll();
   currentIndex = (currentIndex + 1) % filtered.length;
   showWord();
 }
 
 function prevWord() {
-  speakVersion++;
-  speechSynthesis.cancel();
-  isSpeaking = false;
-  clearAutoTimers();
+  stopAll();
   currentIndex = (currentIndex - 1 + filtered.length) % filtered.length;
   showWord();
 }
@@ -844,16 +871,24 @@ function prevWord() {
 function handleCardTap() {
   const card = document.getElementById('mainCard');
   const w = filtered[currentIndex];
-  if (w && w.ex) {
-    card.classList.toggle('show-example');
-  } else {
-    nextWord();
-  }
+  if (w && w.ex) card.classList.toggle('show-example');
+}
+
+// ===================== MODE =====================
+function setMode(mode) {
+  playMode = mode;
+  document.getElementById('modeSingle').classList.toggle('active', mode === 'single');
+  document.getElementById('modeContinuous').classList.toggle('active', mode === 'continuous');
+  document.getElementById('intervalRow').classList.toggle('show', mode === 'continuous');
+  if (isPlaying) stopAll();
+}
+
+function updateInterval() {
+  intervalSec = parseInt(document.getElementById('intervalSelect').value);
 }
 
 // ===================== SWIPE =====================
-let touchStartX = 0;
-let touchStartY = 0;
+let touchStartX = 0, touchStartY = 0;
 document.getElementById('cardArea').addEventListener('touchstart', e => {
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
@@ -866,57 +901,7 @@ document.getElementById('cardArea').addEventListener('touchend', e => {
   }
 }, {passive: true});
 
-// ===================== AUTO PLAY =====================
-function toggleAuto() {
-  autoPlay = !autoPlay;
-  const btn = document.getElementById('autoBtn');
-  const ring = document.getElementById('autoRing');
-  if (autoPlay) {
-    btn.textContent = '⏸ 停止';
-    btn.classList.add('on');
-    ring.style.display = 'block';
-    if (!isSpeaking) startAutoTimer();
-  } else {
-    btn.textContent = '▶ 自動再生';
-    btn.classList.remove('on');
-    ring.style.display = 'none';
-    clearAutoTimers();
-  }
-}
-
-function updateSpeed() {
-  autoSeconds = parseInt(document.getElementById('speedSelect').value);
-  if (autoPlay) { clearAutoTimers(); startAutoTimer(); }
-}
-
-function startAutoTimer() {
-  let elapsed = 0;
-  const fill = document.getElementById('ringFill');
-  const circ = 100;
-  fill.style.strokeDashoffset = circ;
-
-  autoCountdown = setInterval(() => {
-    elapsed++;
-    const offset = circ - (elapsed / autoSeconds) * circ;
-    fill.style.strokeDashoffset = Math.max(0, offset);
-    if (elapsed >= autoSeconds) {
-      nextWord();
-    }
-  }, 1000);
-}
-
-function resetAutoTimer() {
-  clearAutoTimers();
-  startAutoTimer();
-}
-
-function clearAutoTimers() {
-  if (autoCountdown) { clearInterval(autoCountdown); autoCountdown = null; }
-  const fill = document.getElementById('ringFill');
-  if (fill) fill.style.strokeDashoffset = 100;
-}
-
-// ===================== STICKER & OK =====================
+// ===================== STICKER / OK =====================
 function toggleSticker() {
   const w = filtered[currentIndex];
   if (!w || !w.en) return;
@@ -931,41 +916,33 @@ function toggleSticker() {
   document.getElementById('wordEn').style.color = stickerWords.has(w.en) ? 'var(--red)' : 'var(--text)';
   saveStorage();
 }
-
 function markOk() {
   const w = filtered[currentIndex];
   if (!w || !w.en) return;
-  okWords.add(w.en);
-  stickerWords.delete(w.en);
-  saveStorage();
-  showToast('✅ 覚えた！');
+  okWords.add(w.en); stickerWords.delete(w.en);
+  saveStorage(); showToast('✅ 覚えた！');
   document.getElementById('wordEn').style.color = 'var(--text)';
-  setTimeout(() => nextWord(), 600);
+  setTimeout(() => nextWord(), 500);
 }
 
 // ===================== ADD WORD =====================
 function openAddWord() {
-  document.getElementById('newEn').value = '';
-  document.getElementById('newJp').value = '';
-  document.getElementById('newPhonetic').value = '';
-  document.getElementById('newExample').value = '';
+  ['newEn','newJp','newPhonetic','newExample'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('addModal').classList.add('open');
 }
-
 function addWord() {
   const en = document.getElementById('newEn').value.trim();
   const jp = document.getElementById('newJp').value.trim();
-  const ph = document.getElementById('newPhonetic').value.trim();
-  const ex = document.getElementById('newExample').value.trim();
-  const cat = document.getElementById('newCat').value;
   if (!en || !jp) { showToast('英単語と日本語は必須です'); return; }
-  customWords.push({en, jp, ph, cat, ex, custom: true});
-  saveStorage();
-  buildWords();
-  renderCatBar();
-  applyFilter();
-  closeModal('addModal');
-  showToast('✅ 単語を追加しました！');
+  customWords.push({
+    en, jp,
+    ph: document.getElementById('newPhonetic').value.trim(),
+    ex: document.getElementById('newExample').value.trim(),
+    cat: document.getElementById('newCat').value,
+    custom: true
+  });
+  saveStorage(); buildWords(); renderCatBar(); applyFilter();
+  closeModal('addModal'); showToast('✅ 単語を追加しました！');
 }
 
 // ===================== STATS =====================
@@ -974,35 +951,33 @@ function openStats() {
   document.getElementById('statOk').textContent = okWords.size;
   document.getElementById('statSticker').textContent = stickerWords.size;
   document.getElementById('statCustom').textContent = customWords.length;
-
   const list = document.getElementById('stickerList');
-  const sWords = words.filter(w => stickerWords.has(w.en));
-  if (sWords.length === 0) {
-    list.innerHTML = '<div style="color:var(--subtext);font-size:14px;">まだ苦手単語はありません</div>';
-  } else {
-    list.innerHTML = sWords.map(w => `
-      <div class="sticker-item">
+  const sw = words.filter(w => stickerWords.has(w.en));
+  list.innerHTML = sw.length
+    ? sw.map(w => `<div class="sticker-item">
         <div><div class="sticker-word">${w.en}</div><div class="sticker-jp">${w.jp}</div></div>
         <button class="btn-remove" onclick="removeSticker('${w.en}')">✕</button>
-      </div>
-    `).join('');
-  }
+      </div>`).join('')
+    : '<div style="color:var(--subtext);font-size:13px;">まだ苦手単語はありません</div>';
   document.getElementById('statsModal').classList.add('open');
 }
-
 function removeSticker(en) {
-  stickerWords.delete(en);
-  saveStorage();
-  openStats();
-  showToast('苦手リストから外しました');
+  stickerWords.delete(en); saveStorage(); openStats(); showToast('苦手リストから外しました');
 }
 
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
 });
+
+// ===================== DOTS =====================
+function activateDot(n) {
+  stopDots();
+  document.getElementById('d'+n).classList.add('active');
+}
+function stopDots() {
+  [1,2,3].forEach(n => document.getElementById('d'+n).classList.remove('active'));
+}
 
 // ===================== TOAST =====================
 function showToast(msg) {
@@ -1013,16 +988,7 @@ function showToast(msg) {
 }
 
 // ===================== INIT =====================
-function init() {
-  loadStorage();
-  buildWords();
-  renderCatBar();
-  applyFilter();
-  currentIndex = 0;
-  showWord();
-}
-
-init();
+loadStorage(); buildWords(); renderCatBar(); applyFilter(); showWord();
 </script>
 </body>
 </html>
