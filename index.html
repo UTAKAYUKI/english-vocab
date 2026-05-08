@@ -617,6 +617,7 @@ let autoPlay = false;
 let autoInterval = null;
 let autoSeconds = 5;
 let isSpeaking = false;
+let speakVersion = 0;
 let okWords = new Set();
 let stickerWords = new Set();
 let customWords = [];
@@ -712,7 +713,8 @@ function showWord() {
   stopDots();
 
   // Auto speak（読み上げ完了後にタイマー開始）
-  setTimeout(() => speakWordAndSchedule(w), 300);
+  const ver = ++speakVersion;
+  setTimeout(() => speakWordAndSchedule(w, ver), 300);
 }
 
 function updateCount() {
@@ -767,39 +769,47 @@ function speak(text, voice, rate, onEnd) {
   });
 }
 
-async function speakWord(w) {
+async function speakWord(w, ver) {
   if (!w || !w.en || w.en === '苦手単語なし') return;
-  if (isSpeaking) { speechSynthesis.cancel(); isSpeaking = false; }
+  speechSynthesis.cancel();
   isSpeaking = true;
   activateDot(1);
   await speak(w.en, femaleEnVoice, 0.85);
+  if (speakVersion !== ver) { stopDots(); return; }
   await delay(2000);
+  if (speakVersion !== ver) { stopDots(); return; }
   activateDot(2);
   await speak(w.en, femaleEnVoice, 0.85);
+  if (speakVersion !== ver) { stopDots(); return; }
   await delay(2000);
+  if (speakVersion !== ver) { stopDots(); return; }
   activateDot(3);
   await speak(w.en, femaleEnVoice, 0.85);
+  if (speakVersion !== ver) { stopDots(); return; }
   stopDots();
   await delay(500);
+  if (speakVersion !== ver) return;
   if (femaleJaVoice) {
     await speak(w.jp, femaleJaVoice, 0.9);
   }
+  if (speakVersion !== ver) return;
   isSpeaking = false;
 }
 
-async function speakWordAndSchedule(w) {
-  await speakWord(w);
-  if (autoPlay) {
+async function speakWordAndSchedule(w, ver) {
+  await speakWord(w, ver);
+  if (autoPlay && speakVersion === ver) {
     startAutoTimer();
   }
 }
 
 function speakCurrent() {
+  const ver = ++speakVersion;
   speechSynthesis.cancel();
   isSpeaking = false;
   stopDots();
   const w = filtered[currentIndex];
-  if (w) speakWord(w);
+  if (w) speakWord(w, ver);
 }
 
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -814,6 +824,7 @@ function stopDots() {
 
 // ===================== NAVIGATION =====================
 function nextWord() {
+  speakVersion++;
   speechSynthesis.cancel();
   isSpeaking = false;
   clearAutoTimers();
@@ -822,6 +833,7 @@ function nextWord() {
 }
 
 function prevWord() {
+  speakVersion++;
   speechSynthesis.cancel();
   isSpeaking = false;
   clearAutoTimers();
