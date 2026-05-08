@@ -990,12 +990,12 @@ function showToast(msg) {
 // ===================== INIT =====================
 loadStorage(); buildWords(); renderCatBar(); applyFilter(); showWord();
 
-// ===================== SERVICE WORKER =====================
+// ===================== SERVICE WORKER（古いキャッシュ削除のみ）=====================
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log('SW registered'))
-      .catch(e => console.log('SW error', e));
+  // 古いSWを登録解除してキャッシュをクリア
+  navigator.serviceWorker.register('./sw.js');
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(reg => reg.unregister());
   });
 }
 </script>
